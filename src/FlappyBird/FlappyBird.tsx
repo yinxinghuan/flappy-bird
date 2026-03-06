@@ -4,6 +4,7 @@ import { GameScene } from './components/GameScene';
 import SplashScreen from './components/SplashScreen';
 import { resumeAudio, playStartSound } from './utils/sounds';
 import { useLocale } from './i18n';
+import aigramLogo from './img/aigram.svg';
 import './FlappyBird.less';
 
 export interface FlappyBirdProps {
@@ -54,6 +55,7 @@ const FlappyBird = React.memo(
 
     return (
       <div ref={ref} className="fb-game">
+        <img className="fb-game__watermark" src={aigramLogo} alt="Aigram" draggable={false} />
         {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
 
         <GameScene
