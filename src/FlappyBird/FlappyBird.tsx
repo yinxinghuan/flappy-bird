@@ -1,6 +1,7 @@
-import React, { forwardRef, useCallback } from 'react';
+import React, { forwardRef, useCallback, useState } from 'react';
 import { useFlappyBird, CHARACTERS, GAME_WIDTH } from './hooks/useFlappyBird';
 import { GameScene } from './components/GameScene';
+import SplashScreen from './components/SplashScreen';
 import { resumeAudio, playStartSound } from './utils/sounds';
 import { useLocale } from './i18n';
 import './FlappyBird.less';
@@ -29,6 +30,7 @@ const FlappyBird = React.memo(
     } = useFlappyBird();
 
     const { t } = useLocale();
+    const [showSplash, setShowSplash] = useState(true);
 
     const handleStart = useCallback(() => {
       resumeAudio();
@@ -52,6 +54,8 @@ const FlappyBird = React.memo(
 
     return (
       <div ref={ref} className="fb-game">
+        {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
+
         <GameScene
           birdY={birdY}
           birdTilt={birdTilt}

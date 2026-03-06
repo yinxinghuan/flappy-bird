@@ -1,0 +1,25 @@
+.fb-splash {
+  position: absolute;
+  inset: 0;
+  z-index: 999;
+  overflow: hidden;
+  animation: fb-splash-show 3s ease forwards;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: none;
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+}
+
+@keyframes fb-splash-show {
+  0%      { opacity: 0; }
+  16.67%  { opacity: 1; }
+  83.33%  { opacity: 1; }
+  100%    { opacity: 0; }
+}
