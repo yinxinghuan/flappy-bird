@@ -38,11 +38,11 @@ const GAME_HEIGHT = 700;
 const BIRD_X = 80;
 const BIRD_SIZE = 48;
 const PIPE_WIDTH = 60;
-const PIPE_GAP_INITIAL = 220;
-const PIPE_GAP_MIN = 160;
-const PIPE_SPEED_INITIAL = 2.5;
-const PIPE_SPEED_MAX = 4.5;
-const PIPE_SPAWN_DIST = 220;
+const PIPE_GAP_INITIAL = 240;
+const PIPE_GAP_MIN = 170;
+const PIPE_SPEED_INITIAL = 2.0;
+const PIPE_SPEED_MAX = 4.0;
+const PIPE_SPAWN_DIST = 250;
 const GROUND_HEIGHT = 70;
 const VELOCITY_MAX = 10;
 const BONUS_SIZE = 36;
@@ -148,7 +148,7 @@ export function useFlappyBird(): UseFlappyBirdReturn {
       : 0;
 
     if (g.pipes.length === 0 || rightMostPipe < GAME_WIDTH - PIPE_SPAWN_DIST) {
-      const pipeX = g.pipes.length === 0 ? GAME_WIDTH + 80 : rightMostPipe + PIPE_SPAWN_DIST;
+      const pipeX = g.pipes.length === 0 ? GAME_WIDTH + 220 : rightMostPipe + PIPE_SPAWN_DIST;
       const minGapY = gap / 2 + 40;
       const maxGapY = GAME_HEIGHT - GROUND_HEIGHT - gap / 2 - 40;
       const gapY = minGapY + Math.random() * (maxGapY - minGapY);
