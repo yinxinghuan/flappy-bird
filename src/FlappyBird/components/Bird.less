@@ -22,22 +22,22 @@
 // Gentle gliding bob
 @keyframes fb-bird-glide {
   from {
-    transform: translateY(-2px) scaleX(1);
+    transform: translateY(-2px) scaleX(-1);
   }
   to {
-    transform: translateY(2px) scaleX(0.97);
+    transform: translateY(2px) scaleX(-0.97);
   }
 }
 
 // Wing flapping on tap - quick squeeze effect
 @keyframes fb-bird-flap {
   0% {
-    transform: scaleY(1) scaleX(1);
+    transform: scaleY(1) scaleX(-1);
   }
   50% {
-    transform: scaleY(0.85) scaleX(1.1);
+    transform: scaleY(0.85) scaleX(-1.1);
   }
   100% {
-    transform: scaleY(1) scaleX(1);
+    transform: scaleY(1) scaleX(-1);
   }
 }
