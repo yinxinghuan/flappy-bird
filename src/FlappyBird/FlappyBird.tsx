@@ -2,6 +2,7 @@ import React, { forwardRef, useCallback } from 'react';
 import { useFlappyBird, CHARACTERS, GAME_WIDTH } from './hooks/useFlappyBird';
 import { GameScene } from './components/GameScene';
 import { resumeAudio, playStartSound } from './utils/sounds';
+import { useLocale } from './i18n';
 import './FlappyBird.less';
 
 export interface FlappyBirdProps {
@@ -27,6 +28,8 @@ const FlappyBird = React.memo(
       resetGame,
     } = useFlappyBird();
 
+    const { t } = useLocale();
+
     const handleStart = useCallback(() => {
       resumeAudio();
       playStartSound();
@@ -40,10 +43,10 @@ const FlappyBird = React.memo(
     }, [startGame]);
 
     const getMedal = (s: number) => {
-      if (s >= 40) return { emoji: '🏆', label: '传奇' };
-      if (s >= 25) return { emoji: '🥇', label: '金牌' };
-      if (s >= 15) return { emoji: '🥈', label: '银牌' };
-      if (s >= 5) return { emoji: '🥉', label: '铜牌' };
+      if (s >= 40) return { emoji: '🏆', label: t('medal.legend') };
+      if (s >= 25) return { emoji: '🥇', label: t('medal.gold') };
+      if (s >= 15) return { emoji: '🥈', label: t('medal.silver') };
+      if (s >= 5)  return { emoji: '🥉', label: t('medal.bronze') };
       return null;
     };
 
@@ -61,6 +64,7 @@ const FlappyBird = React.memo(
           phase={phase}
           isFlapping={isFlapping}
           onTap={flap}
+          t={t}
         />
 
         {/* Start Modal */}
@@ -69,10 +73,10 @@ const FlappyBird = React.memo(
             <div className="fb-modal fb-modal--start" style={{ maxWidth: GAME_WIDTH - 40 }}>
               <div className="fb-modal__confetti" />
               <h1 className="fb-modal__title">FLAPPY BIRD</h1>
-              <p className="fb-modal__subtitle">🐦 飞 行 冒 险 🐦</p>
+              <p className="fb-modal__subtitle">{t('subtitle')}</p>
 
               <div className="fb-modal__section">
-                <h3 className="fb-modal__section-title">选择角色</h3>
+                <h3 className="fb-modal__section-title">{t('selectChar')}</h3>
                 <div className="fb-modal__characters">
                   {CHARACTERS.map((char) => (
                     <div
@@ -80,27 +84,27 @@ const FlappyBird = React.memo(
                       className={`fb-char-card ${selectedCharacter.id === char.id ? 'fb-char-card--selected' : ''}`}
                       onClick={() => selectCharacter(char)}
                     >
-                      <img src={char.image} alt={char.name} className="fb-char-card__img" />
-                      <span className="fb-char-card__name">{char.name}</span>
-                      <span className="fb-char-card__desc">{char.description}</span>
+                      <img src={char.image} alt={t(`char.${char.id}.name`)} className="fb-char-card__img" />
+                      <span className="fb-char-card__name">{t(`char.${char.id}.name`)}</span>
+                      <span className="fb-char-card__desc">{t(`char.${char.id}.desc`)}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="fb-modal__rules">
-                <span>👆 点击屏幕拍翅飞行</span>
-                <span>🔰 穿过管道得 1 分</span>
-                <span>⭐ 吃角色道具加 3 分</span>
-                <span>👻 碰到幽灵扣 5 分</span>
+                <span>{t('rule1')}</span>
+                <span>{t('rule2')}</span>
+                <span>{t('rule3')}</span>
+                <span>{t('rule4')}</span>
               </div>
 
               {highScore > 0 && (
-                <div className="fb-modal__record">🏆 最高纪录: {highScore}</div>
+                <div className="fb-modal__record">{t('highRecord', { n: highScore })}</div>
               )}
 
               <button className="fb-modal__btn" onClick={handleStart}>
-                开始飞行!
+                {t('startBtn')}
               </button>
             </div>
           </div>
@@ -120,11 +124,11 @@ const FlappyBird = React.memo(
                   </div>
                 )}
                 <div className="fb-modal__score-row">
-                  <span className="fb-modal__score-label">得分</span>
+                  <span className="fb-modal__score-label">{t('scoreLabel')}</span>
                   <span className="fb-modal__score-value">{score}</span>
                 </div>
                 <div className="fb-modal__score-row">
-                  <span className="fb-modal__score-label">最高</span>
+                  <span className="fb-modal__score-label">{t('bestLabel')}</span>
                   <span className="fb-modal__score-value fb-modal__score-value--best">{highScore}</span>
                 </div>
                 {score >= highScore && score > 0 && (
@@ -134,10 +138,10 @@ const FlappyBird = React.memo(
 
               <div className="fb-modal__actions">
                 <button className="fb-modal__btn" onClick={handleReplay}>
-                  再来一次
+                  {t('replayBtn')}
                 </button>
                 <button className="fb-modal__btn fb-modal__btn--secondary" onClick={resetGame}>
-                  返回首页
+                  {t('homeBtn')}
                 </button>
               </div>
             </div>

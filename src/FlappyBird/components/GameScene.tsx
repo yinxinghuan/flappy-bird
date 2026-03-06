@@ -19,6 +19,7 @@ export interface GameSceneProps {
   phase?: 'start' | 'playing' | 'dead';
   isFlapping?: boolean;
   onTap?: () => void;
+  t?: (key: string) => string;
 }
 
 const GameScene = React.memo(
@@ -35,6 +36,7 @@ const GameScene = React.memo(
       phase = 'start',
       isFlapping = false,
       onTap,
+      t = (k: string) => k,
     } = props;
 
     const [scale, setScale] = useState(1);
@@ -111,14 +113,14 @@ const GameScene = React.memo(
             <div className="fb-scene__hud">
               <div className="fb-scene__score">{score}</div>
               {highScore > 0 && (
-                <div className="fb-scene__high-score">Best: {highScore}</div>
+                <div className="fb-scene__high-score">{t('hudBest')}{highScore}</div>
               )}
             </div>
           )}
 
           {/* Tap hint */}
           {phase === 'playing' && score === 0 && pipes.length <= 1 && (
-            <div className="fb-scene__tap-hint">Tap!</div>
+            <div className="fb-scene__tap-hint">{t('tapHint')}</div>
           )}
         </div>
       </div>
