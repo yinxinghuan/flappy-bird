@@ -1,0 +1,47 @@
+.fb-pipe-pair {
+  position: absolute;
+  top: 0;
+  z-index: 5;
+  will-change: left;
+}
+
+.fb-pipe {
+  position: absolute;
+  left: 0;
+  background: linear-gradient(90deg, #5cb85c 0%, #73d873 40%, #4cae4c 80%, #3d8b3d 100%);
+  border: 3px solid #2d6a2d;
+  border-radius: 4px;
+
+  &--top {
+    top: 0;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+
+    .fb-pipe__cap {
+      position: absolute;
+      bottom: -2px;
+      left: -6px;
+      right: -6px;
+      height: 28px;
+      background: linear-gradient(90deg, #4cae4c 0%, #6fd66f 35%, #5cb85c 70%, #3d8b3d 100%);
+      border: 3px solid #2d6a2d;
+      border-radius: 4px;
+    }
+  }
+
+  &--bottom {
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+
+    .fb-pipe__cap {
+      position: absolute;
+      top: -2px;
+      left: -6px;
+      right: -6px;
+      height: 28px;
+      background: linear-gradient(90deg, #4cae4c 0%, #6fd66f 35%, #5cb85c 70%, #3d8b3d 100%);
+      border: 3px solid #2d6a2d;
+      border-radius: 4px;
+    }
+  }
+}
