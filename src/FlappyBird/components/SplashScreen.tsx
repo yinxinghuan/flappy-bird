@@ -9,12 +9,13 @@ export interface SplashScreenProps {
 const SplashScreen = React.memo(
   forwardRef<HTMLDivElement, SplashScreenProps>(function SplashScreen({ onDone }, ref) {
     return (
-      <div className="fb-splash" ref={ref} onAnimationEnd={onDone}>
+      <div className="fb-splash" ref={ref}>
         <img
           className="fb-splash__img"
           src={posterImg}
           alt="Flappy Bird"
           draggable={false}
+          onAnimationEnd={onDone}
         />
       </div>
     );

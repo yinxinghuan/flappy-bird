@@ -5,20 +5,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.55);
-  animation: fb-splash-show 3s ease forwards;
+  pointer-events: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   touch-action: none;
 
   &__img {
-    width: 78%;
+    width: 72%;
     aspect-ratio: 1;
-    border-radius: 24px;
+    border-radius: 20px;
     object-fit: cover;
     display: block;
     pointer-events: none;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.7);
+    animation: fb-splash-show 3s ease forwards;
   }
 }
 
