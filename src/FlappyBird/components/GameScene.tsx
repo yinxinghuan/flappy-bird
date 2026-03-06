@@ -17,6 +17,7 @@ export interface GameSceneProps {
   character?: BirdCharacter;
   groundOffset?: number;
   phase?: 'start' | 'playing' | 'dead';
+  isFlapping?: boolean;
   onTap?: () => void;
 }
 
@@ -32,6 +33,7 @@ const GameScene = React.memo(
       character,
       groundOffset = 0,
       phase = 'start',
+      isFlapping = false,
       onTap,
     } = props;
 
@@ -76,7 +78,7 @@ const GameScene = React.memo(
 
           {/* Bird */}
           {phase !== 'start' && character && (
-            <Bird y={birdY} tilt={birdTilt} image={character.image} />
+            <Bird y={birdY} tilt={birdTilt} image={character.sideImage} isFlapping={isFlapping} />
           )}
 
           {/* Ground */}

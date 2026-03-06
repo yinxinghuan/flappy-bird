@@ -10,15 +10,34 @@
     height: 100%;
     object-fit: contain;
     pointer-events: none;
-    animation: fb-bird-hover 0.3s ease-in-out infinite alternate;
+    animation: fb-bird-glide 0.6s ease-in-out infinite alternate;
+  }
+
+  // Flapping state - faster wing beat animation
+  &--flapping &__img {
+    animation: fb-bird-flap 0.15s ease-in-out 3;
   }
 }
 
-@keyframes fb-bird-hover {
+// Gentle gliding bob
+@keyframes fb-bird-glide {
   from {
-    transform: translateY(-1px);
+    transform: translateY(-2px) scaleX(1);
   }
   to {
-    transform: translateY(1px);
+    transform: translateY(2px) scaleX(0.97);
+  }
+}
+
+// Wing flapping on tap - quick squeeze effect
+@keyframes fb-bird-flap {
+  0% {
+    transform: scaleY(1) scaleX(1);
+  }
+  50% {
+    transform: scaleY(0.85) scaleX(1.1);
+  }
+  100% {
+    transform: scaleY(1) scaleX(1);
   }
 }

@@ -2,6 +2,7 @@ export interface BirdCharacter {
   id: string;
   name: string;
   image: string;
+  sideImage: string;
   gravity: number;
   flapForce: number;
   hitboxSize: number;

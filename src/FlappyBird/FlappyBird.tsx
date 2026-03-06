@@ -20,6 +20,7 @@ const FlappyBird = React.memo(
       phase,
       selectedCharacter,
       groundOffset,
+      isFlapping,
       selectCharacter,
       startGame,
       flap,
@@ -58,6 +59,7 @@ const FlappyBird = React.memo(
           character={selectedCharacter}
           groundOffset={groundOffset}
           phase={phase}
+          isFlapping={isFlapping}
           onTap={flap}
         />
 

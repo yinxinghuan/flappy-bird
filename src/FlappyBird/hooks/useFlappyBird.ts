@@ -13,12 +13,16 @@ import guitaristImg from '../img/guitarist.png';
 import coderImg from '../img/coder.png';
 import hackerImg from '../img/hacker.png';
 import ghostImg from '../img/ghost.png';
+import guitaristSideImg from '../img/guitarist_side.png';
+import coderSideImg from '../img/coder_side.png';
+import hackerSideImg from '../img/hacker_side.png';
+import ghostSideImg from '../img/ghost_side.png';
 
 export const CHARACTERS: BirdCharacter[] = [
-  { id: 'guitarist', name: '吉他少年', image: guitaristImg, gravity: 0.45, flapForce: -7.5, hitboxSize: 32, description: '均衡型' },
-  { id: 'coder', name: '咖啡女孩', image: coderImg, gravity: 0.35, flapForce: -6.5, hitboxSize: 30, description: '轻飘型·简单' },
-  { id: 'hacker', name: '眼镜大叔', image: hackerImg, gravity: 0.55, flapForce: -8.5, hitboxSize: 34, description: '重力型·困难' },
-  { id: 'ghost', name: '调皮幽灵', image: ghostImg, gravity: 0.3, flapForce: -6, hitboxSize: 28, description: '灵动型·简单' },
+  { id: 'guitarist', name: '吉他少年', image: guitaristImg, sideImage: guitaristSideImg, gravity: 0.45, flapForce: -7.5, hitboxSize: 18, description: '均衡型' },
+  { id: 'coder', name: '咖啡女孩', image: coderImg, sideImage: coderSideImg, gravity: 0.35, flapForce: -6.5, hitboxSize: 17, description: '轻飘型·简单' },
+  { id: 'hacker', name: '眼镜大叔', image: hackerImg, sideImage: hackerSideImg, gravity: 0.55, flapForce: -8.5, hitboxSize: 20, description: '重力型·困难' },
+  { id: 'ghost', name: '调皮幽灵', image: ghostImg, sideImage: ghostSideImg, gravity: 0.3, flapForce: -6, hitboxSize: 15, description: '灵动型·简单' },
 ];
 
 const BONUS_CHARACTERS = [
@@ -56,6 +60,7 @@ export interface UseFlappyBirdReturn {
   phase: 'start' | 'playing' | 'dead';
   selectedCharacter: BirdCharacter;
   groundOffset: number;
+  isFlapping: boolean;
   selectCharacter: (char: BirdCharacter) => void;
   startGame: () => void;
   flap: () => void;
@@ -75,6 +80,7 @@ export function useFlappyBird(): UseFlappyBirdReturn {
   const [pipes, setPipes] = useState<PipeState[]>([]);
   const [bonuses, setBonuses] = useState<BonusState[]>([]);
   const [groundOffset, setGroundOffset] = useState(0);
+  const [isFlapping, setIsFlapping] = useState(false);
 
   const gameRef = useRef({
     birdY: GAME_HEIGHT / 2 - BIRD_SIZE / 2,
@@ -94,6 +100,7 @@ export function useFlappyBird(): UseFlappyBirdReturn {
   const rafRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
   const lastFlapRef = useRef(0);
+  const flapTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const getPipeSpeed = useCallback((s: number) => {
     return Math.min(PIPE_SPEED_INITIAL + s * 0.05, PIPE_SPEED_MAX);
@@ -278,6 +285,9 @@ export function useFlappyBird(): UseFlappyBirdReturn {
     lastFlapRef.current = now;
     g.velocity = g.character.flapForce;
     playFlapSound();
+    setIsFlapping(true);
+    clearTimeout(flapTimerRef.current);
+    flapTimerRef.current = setTimeout(() => setIsFlapping(false), 300);
   }, []);
 
   const startGame = useCallback(() => {
@@ -338,6 +348,7 @@ export function useFlappyBird(): UseFlappyBirdReturn {
     phase,
     selectedCharacter,
     groundOffset,
+    isFlapping,
     selectCharacter,
     startGame,
     flap,

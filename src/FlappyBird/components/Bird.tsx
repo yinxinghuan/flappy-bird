@@ -11,12 +11,12 @@ export interface BirdProps {
 
 const Bird = React.memo(
   forwardRef<HTMLDivElement, BirdProps>(function Bird(props, ref) {
-    const { y = 300, tilt = 0, image = '' } = props;
+    const { y = 300, tilt = 0, image = '', isFlapping = false } = props;
 
     return (
       <div
         ref={ref}
-        className="fb-bird"
+        className={`fb-bird ${isFlapping ? 'fb-bird--flapping' : ''}`}
         style={{
           left: BIRD_X,
           top: y,
