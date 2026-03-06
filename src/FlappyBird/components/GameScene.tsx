@@ -50,7 +50,7 @@ const GameScene = React.memo(
     }, []);
 
     const handleInteraction = useCallback(
-      (e: React.MouseEvent | React.TouchEvent) => {
+      (e: React.PointerEvent) => {
         e.preventDefault();
         onTap?.();
       },
@@ -61,8 +61,7 @@ const GameScene = React.memo(
       <div
         ref={ref}
         className="fb-scene"
-        onMouseDown={handleInteraction}
-        onTouchStart={handleInteraction}
+        onPointerDown={handleInteraction}
       >
         <div
           className="fb-scene__viewport"
