@@ -93,6 +93,7 @@ export function useFlappyBird(): UseFlappyBirdReturn {
 
   const rafRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
+  const lastFlapRef = useRef(0);
 
   const getPipeSpeed = useCallback((s: number) => {
     return Math.min(PIPE_SPEED_INITIAL + s * 0.05, PIPE_SPEED_MAX);
@@ -269,7 +270,6 @@ export function useFlappyBird(): UseFlappyBirdReturn {
     rafRef.current = requestAnimationFrame(gameLoop);
   }, [getPipeSpeed, getPipeGap]);
 
-  const lastFlapRef = useRef(0);
   const flap = useCallback(() => {
     const g = gameRef.current;
     if (!g.playing || g.dead) return;
