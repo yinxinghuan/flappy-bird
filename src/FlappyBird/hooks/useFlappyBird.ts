@@ -19,10 +19,10 @@ import hackerSideImg from '../img/hacker_side.png';
 import ghostSideImg from '../img/ghost_side.png';
 
 export const CHARACTERS: BirdCharacter[] = [
-  { id: 'guitarist', name: '吉他少年', image: guitaristImg, sideImage: guitaristSideImg, gravity: 0.45, flapForce: -7.5, hitboxSize: 18, description: '均衡型' },
-  { id: 'coder', name: '咖啡女孩', image: coderImg, sideImage: coderSideImg, gravity: 0.35, flapForce: -6.5, hitboxSize: 17, description: '轻飘型·简单' },
-  { id: 'hacker', name: '眼镜大叔', image: hackerImg, sideImage: hackerSideImg, gravity: 0.55, flapForce: -8.5, hitboxSize: 20, description: '重力型·困难' },
-  { id: 'ghost', name: '调皮幽灵', image: ghostImg, sideImage: ghostSideImg, gravity: 0.3, flapForce: -6, hitboxSize: 15, description: '灵动型·简单' },
+  { id: 'guitarist', name: '吉他少年', image: guitaristImg, sideImage: guitaristSideImg, gravity: 0.45, flapForce: -7.5, hitboxSize: 24, description: '均衡型' },
+  { id: 'coder', name: '咖啡女孩', image: coderImg, sideImage: coderSideImg, gravity: 0.35, flapForce: -6.5, hitboxSize: 23, description: '轻飘型·简单' },
+  { id: 'hacker', name: '眼镜大叔', image: hackerImg, sideImage: hackerSideImg, gravity: 0.55, flapForce: -8.5, hitboxSize: 27, description: '重力型·困难' },
+  { id: 'ghost', name: '调皮幽灵', image: ghostImg, sideImage: ghostSideImg, gravity: 0.3, flapForce: -6, hitboxSize: 20, description: '灵动型·简单' },
 ];
 
 const BONUS_CHARACTERS = [
@@ -36,7 +36,7 @@ const BONUS_CHARACTERS = [
 const GAME_WIDTH = 400;
 const GAME_HEIGHT = 700;
 const BIRD_X = 80;
-const BIRD_SIZE = 48;
+const BIRD_SIZE = 64;
 const PIPE_WIDTH = 60;
 const PIPE_GAP_INITIAL = 240;
 const PIPE_GAP_MIN = 170;
