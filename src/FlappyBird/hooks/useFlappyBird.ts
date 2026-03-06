@@ -259,8 +259,8 @@ export function useFlappyBird(): UseFlappyBirdReturn {
       }
       setBirdY(g.birdY);
       setBirdTilt(90);
-      setPipes([...g.pipes]);
-      setBonuses([...g.bonuses]);
+      setPipes(g.pipes.map(p => ({ ...p })));
+      setBonuses(g.bonuses.map(b => ({ ...b })));
       setGroundOffset(g.groundOffset);
       setPhase('dead');
       return;
@@ -270,8 +270,8 @@ export function useFlappyBird(): UseFlappyBirdReturn {
     setBirdY(g.birdY);
     setBirdTilt(tilt);
     setScore(g.score);
-    setPipes([...g.pipes]);
-    setBonuses([...g.bonuses]);
+    setPipes(g.pipes.map(p => ({ ...p })));
+    setBonuses(g.bonuses.map(b => ({ ...b })));
     setGroundOffset(g.groundOffset);
 
     rafRef.current = requestAnimationFrame(gameLoop);
