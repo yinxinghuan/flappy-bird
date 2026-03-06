@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import type { PipeState, BonusState } from '../types';
 import type { BirdCharacter } from '../types';
 import { GAME_WIDTH, GAME_HEIGHT, GROUND_HEIGHT } from '../hooks/useFlappyBird';
@@ -37,6 +37,18 @@ const GameScene = React.memo(
       onTap,
     } = props;
 
+    const [scale, setScale] = useState(1);
+
+    useEffect(() => {
+      const updateScale = () => {
+        const s = Math.min(1, window.innerWidth / GAME_WIDTH, window.innerHeight / GAME_HEIGHT);
+        setScale(s);
+      };
+      updateScale();
+      window.addEventListener('resize', updateScale);
+      return () => window.removeEventListener('resize', updateScale);
+    }, []);
+
     const handleInteraction = useCallback(
       (e: React.MouseEvent | React.TouchEvent) => {
         e.preventDefault();
@@ -54,7 +66,12 @@ const GameScene = React.memo(
       >
         <div
           className="fb-scene__viewport"
-          style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
+          style={{
+            width: GAME_WIDTH,
+            height: GAME_HEIGHT,
+            transform: scale < 1 ? `scale(${scale})` : undefined,
+            transformOrigin: 'top center',
+          }}
         >
           {/* Sky background */}
           <div className="fb-scene__sky" />
