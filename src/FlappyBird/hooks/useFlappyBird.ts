@@ -45,8 +45,9 @@ const PIPE_SPEED_MAX = 4.0;
 const PIPE_SPAWN_DIST = 250;
 const GROUND_HEIGHT = 70;
 const VELOCITY_MAX = 10;
-const BONUS_SIZE = 36;
+const BONUS_SIZE = 52;
 const BONUS_CHANCE = 0.25;
+const GRACE_MS = 2000; // grace period at game start: bird hovers, no collision
 
 export { GAME_WIDTH, GAME_HEIGHT, GROUND_HEIGHT, PIPE_WIDTH, BIRD_SIZE, BIRD_X, BONUS_SIZE };
 
@@ -95,6 +96,7 @@ export function useFlappyBird(): UseFlappyBirdReturn {
     dead: false,
     playing: false,
     character: CHARACTERS[0],
+    graceUntil: 0, // timestamp until which grace period is active
   });
 
   const rafRef = useRef<number>(0);
@@ -121,9 +123,23 @@ export function useFlappyBird(): UseFlappyBirdReturn {
     const speed = getPipeSpeed(g.score);
     const gap = getPipeGap(g.score);
 
-    // Physics
-    g.velocity += g.character.gravity * delta;
-    if (g.velocity > VELOCITY_MAX) g.velocity = VELOCITY_MAX;
+    // Grace period: set on first frame
+    if (g.graceUntil === 0) g.graceUntil = timestamp + GRACE_MS;
+    const inGrace = timestamp < g.graceUntil;
+
+    // Physics — hover during grace (prevent sinking, allow flap upward), full gravity after
+    if (inGrace) {
+      if (g.velocity < 0) {
+        // User tapped: apply gravity so the flap arc works normally
+        g.velocity += g.character.gravity * delta;
+      } else {
+        // No tap yet: clamp to 0 so bird hovers in place
+        g.velocity = 0;
+      }
+    } else {
+      g.velocity += g.character.gravity * delta;
+      if (g.velocity > VELOCITY_MAX) g.velocity = VELOCITY_MAX;
+    }
     g.birdY += g.velocity * delta;
 
     // Tilt based on velocity
@@ -215,13 +231,13 @@ export function useFlappyBird(): UseFlappyBirdReturn {
     g.pipes = g.pipes.filter(p => p.x > -PIPE_WIDTH - 20);
     g.bonuses = g.bonuses.filter(b => b.x > -BONUS_SIZE - 20 && !b.collected);
 
-    // Collision detection
+    // Collision detection (skipped during grace period)
     let dead = false;
 
-    // Ground
+    // Ground — always clamp, only kill after grace
     if (g.birdY + BIRD_SIZE > GAME_HEIGHT - GROUND_HEIGHT) {
       g.birdY = GAME_HEIGHT - GROUND_HEIGHT - BIRD_SIZE;
-      dead = true;
+      if (!inGrace) dead = true;
     }
     // Ceiling - just clamp, don't kill
     if (g.birdY < 0) {
@@ -229,18 +245,20 @@ export function useFlappyBird(): UseFlappyBirdReturn {
       g.velocity = 0;
     }
 
-    // Pipe collision
-    for (const pipe of g.pipes) {
-      const pipeLeft = pipe.x;
-      const pipeRight = pipe.x + PIPE_WIDTH;
+    // Pipe collision — only after grace period
+    if (!inGrace) {
+      for (const pipe of g.pipes) {
+        const pipeLeft = pipe.x;
+        const pipeRight = pipe.x + PIPE_WIDTH;
 
-      if (birdCenterX + hitRadius > pipeLeft && birdCenterX - hitRadius < pipeRight) {
-        const topPipeBottom = pipe.gapY - pipe.gapSize / 2;
-        const bottomPipeTop = pipe.gapY + pipe.gapSize / 2;
+        if (birdCenterX + hitRadius > pipeLeft && birdCenterX - hitRadius < pipeRight) {
+          const topPipeBottom = pipe.gapY - pipe.gapSize / 2;
+          const bottomPipeTop = pipe.gapY + pipe.gapSize / 2;
 
-        if (birdCenterY - hitRadius < topPipeBottom || birdCenterY + hitRadius > bottomPipeTop) {
-          dead = true;
-          break;
+          if (birdCenterY - hitRadius < topPipeBottom || birdCenterY + hitRadius > bottomPipeTop) {
+            dead = true;
+            break;
+          }
         }
       }
     }
@@ -293,7 +311,7 @@ export function useFlappyBird(): UseFlappyBirdReturn {
   const startGame = useCallback(() => {
     const g = gameRef.current;
     g.birdY = GAME_HEIGHT / 2 - BIRD_SIZE / 2;
-    g.velocity = -2;
+    g.velocity = 0;
     g.pipes = [];
     g.bonuses = [];
     g.score = 0;
@@ -304,6 +322,7 @@ export function useFlappyBird(): UseFlappyBirdReturn {
     g.dead = false;
     g.playing = true;
     g.character = selectedCharacter;
+    g.graceUntil = 0; // will be set on first frame
 
     setBirdY(g.birdY);
     setBirdTilt(0);
