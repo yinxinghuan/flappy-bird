@@ -19,10 +19,10 @@ import hackerSideImg from '../img/hacker_side.png';
 import ghostSideImg from '../img/ghost_side.png';
 
 export const CHARACTERS: BirdCharacter[] = [
-  { id: 'guitarist', name: '吉他少年', image: guitaristImg, sideImage: guitaristSideImg, gravity: 0.45, flapForce: -7.5, hitboxSize: 30, description: '均衡型' },
-  { id: 'coder', name: '咖啡女孩', image: coderImg, sideImage: coderSideImg, gravity: 0.35, flapForce: -6.5, hitboxSize: 28, description: '轻飘型·简单' },
-  { id: 'hacker', name: '眼镜大叔', image: hackerImg, sideImage: hackerSideImg, gravity: 0.55, flapForce: -8.5, hitboxSize: 33, description: '重力型·困难' },
-  { id: 'ghost', name: '调皮幽灵', image: ghostImg, sideImage: ghostSideImg, gravity: 0.3, flapForce: -6, hitboxSize: 25, description: '灵动型·简单' },
+  { id: 'guitarist', name: 'Guitar Boy · Algram', image: guitaristImg, sideImage: guitaristSideImg, gravity: 0.45, flapForce: -7.5, hitboxSize: 30, description: 'Balanced' },
+  { id: 'coder', name: 'Coffee Girl · Jenny', image: coderImg, sideImage: coderSideImg, gravity: 0.35, flapForce: -6.5, hitboxSize: 28, description: 'Light · Easy' },
+  { id: 'hacker', name: 'Hacker Dude · JM·F', image: hackerImg, sideImage: hackerSideImg, gravity: 0.55, flapForce: -8.5, hitboxSize: 33, description: 'Heavy · Hard' },
+  { id: 'ghost', name: 'Cheeky Ghost · ghostpixel', image: ghostImg, sideImage: ghostSideImg, gravity: 0.3, flapForce: -6, hitboxSize: 25, description: 'Agile · Easy' },
 ];
 
 const BONUS_CHARACTERS = [
