@@ -64,9 +64,6 @@ const FlappyBird = React.memo(
     return (
       <div ref={ref} className="fb-game">
         <img className="fb-game__watermark" src={aigramLogo} alt="Aigram" draggable={false} />
-        {phase === 'start' && (
-          <button className="fb-lb-icon" onPointerDown={() => setShowLeaderboard(true)}>🏆</button>
-        )}
         {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
         {showLeaderboard && (
           <Leaderboard
@@ -131,6 +128,7 @@ const FlappyBird = React.memo(
               <button className="fb-modal__btn" onClick={handleStart}>
                 {t('startBtn')}
               </button>
+              <button className="fb-lb-icon" onPointerDown={() => setShowLeaderboard(true)}>🏆</button>
             </div>
           </div>
         )}
