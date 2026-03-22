@@ -96,7 +96,6 @@ const FlappyBird = React.memo(
             <div className="fb-modal fb-modal--start" style={{ maxWidth: GAME_WIDTH - 40 }}>
               <div className="fb-modal__confetti" />
               <h1 className="fb-modal__title">FLAPPY BIRD</h1>
-              <p className="fb-modal__subtitle">{t('subtitle')}</p>
 
               <div className="fb-modal__section">
                 <h3 className="fb-modal__section-title">{t('selectChar')}</h3>
