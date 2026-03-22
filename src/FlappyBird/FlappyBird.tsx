@@ -1,9 +1,10 @@
-import React, { forwardRef, useCallback, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import { useFlappyBird, CHARACTERS, GAME_WIDTH } from './hooks/useFlappyBird';
 import { GameScene } from './components/GameScene';
 import SplashScreen from './components/SplashScreen';
 import { resumeAudio, playStartSound } from './utils/sounds';
 import { useLocale } from './i18n';
+import { useGameScore, Leaderboard } from '@shared/leaderboard';
 import aigramLogo from './img/aigram.svg';
 import './FlappyBird.less';
 
@@ -32,6 +33,13 @@ const FlappyBird = React.memo(
 
     const { t } = useLocale();
     const [showSplash, setShowSplash] = useState(true);
+    const [showLeaderboard, setShowLeaderboard] = useState(false);
+    const { isInAigram, submitScore, fetchGlobalLeaderboard, fetchFriendsLeaderboard } = useGameScore('flappy-bird');
+
+    // 游戏结束时提交分数
+    useEffect(() => {
+      if (phase === 'dead' && score > 0) submitScore(score);
+    }, [phase]);
 
     const handleStart = useCallback(() => {
       resumeAudio();
@@ -57,6 +65,15 @@ const FlappyBird = React.memo(
       <div ref={ref} className="fb-game">
         <img className="fb-game__watermark" src={aigramLogo} alt="Aigram" draggable={false} />
         {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
+        {showLeaderboard && (
+          <Leaderboard
+            gameName="Flappy Bird"
+            isInAigram={isInAigram}
+            onClose={() => setShowLeaderboard(false)}
+            fetchGlobal={fetchGlobalLeaderboard}
+            fetchFriends={fetchFriendsLeaderboard}
+          />
+        )}
 
         <GameScene
           birdY={birdY}
@@ -111,6 +128,9 @@ const FlappyBird = React.memo(
 
               <button className="fb-modal__btn" onClick={handleStart}>
                 {t('startBtn')}
+              </button>
+              <button className="fb-modal__btn fb-modal__btn--lb" onPointerDown={() => setShowLeaderboard(true)}>
+                🏆 排行榜
               </button>
             </div>
           </div>
