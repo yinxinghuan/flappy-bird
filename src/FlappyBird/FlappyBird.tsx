@@ -2,6 +2,7 @@ import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import { useFlappyBird, CHARACTERS, GAME_WIDTH } from './hooks/useFlappyBird';
 import { GameScene } from './components/GameScene';
 import SplashScreen from './components/SplashScreen';
+import FbFlyingBirds from './components/FbFlyingBirds';
 import { resumeAudio, playStartSound } from './utils/sounds';
 import { useLocale } from './i18n';
 import { useGameScore, Leaderboard } from '@shared/leaderboard';
@@ -92,7 +93,8 @@ const FlappyBird = React.memo(
 
         {/* Start Modal */}
         {phase === 'start' && (
-          <div className="fb-modal-overlay">
+          <div className="fb-modal-overlay fb-modal-overlay--sky">
+            <FbFlyingBirds />
             <div className="fb-modal fb-modal--start" style={{ maxWidth: GAME_WIDTH - 40 }}>
               <div className="fb-modal__confetti" />
               <h1 className="fb-modal__title">FLAPPY BIRD</h1>

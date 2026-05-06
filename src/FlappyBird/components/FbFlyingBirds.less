@@ -1,0 +1,80 @@
+.fb-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+
+  &__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      #87ceeb 0%,
+      #c8e3f4 45%,
+      #fff0d0 90%,
+      #f5d97a 100%
+    );
+    opacity: 0.95;
+  }
+
+  // Cloud — soft white blob shape
+  &__cloud {
+    position: absolute;
+    left: -200px;
+    background: radial-gradient(ellipse at center, #ffffff 30%, rgba(255, 255, 255, 0.5) 60%, transparent 100%);
+    border-radius: 50%;
+    filter: blur(2px);
+    animation-name: fb-sky-cloud-drift;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  // Bird wrapper — handles horizontal travel
+  &__bird {
+    position: absolute;
+    left: -80px;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    &--rtl { animation-name: fb-sky-bird-rtl; }
+    &--ltr {
+      animation-name: fb-sky-bird-ltr;
+      left: auto;
+      right: -80px;
+      .fb-sky__bird-img { transform: scaleX(-1); }
+    }
+  }
+
+  // Image bobs vertically inside the wrapper
+  &__bird-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    background: rgba(255, 240, 200, 0.5);
+    animation: fb-sky-bird-bob 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes fb-sky-cloud-drift {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(100vw + 250px)); }
+}
+
+@keyframes fb-sky-bird-rtl {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(100vw + 160px)); }
+}
+@keyframes fb-sky-bird-ltr {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(-100vw - 160px)); }
+}
+
+@keyframes fb-sky-bird-bob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(calc(var(--bob-amp, 6px) * -1)) rotate(3deg); }
+}
