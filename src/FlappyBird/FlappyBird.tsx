@@ -35,7 +35,7 @@ const FlappyBird = React.memo(
     const { t } = useLocale();
     const [showSplash, setShowSplash] = useState(true);
     const [showLeaderboard, setShowLeaderboard] = useState(false);
-    const { isInAigram, submitScore, fetchGlobalLeaderboard, fetchFriendsLeaderboard } = useGameScore('flappy-bird');
+    const { isInAigram, submitScore, fetchLeaderboard } = useGameScore();
 
     // 游戏结束时提交分数
     useEffect(() => {
@@ -71,8 +71,7 @@ const FlappyBird = React.memo(
             gameName="Flappy Bird"
             isInAigram={isInAigram}
             onClose={() => setShowLeaderboard(false)}
-            fetchGlobal={fetchGlobalLeaderboard}
-            fetchFriends={fetchFriendsLeaderboard}
+            fetch={fetchLeaderboard}
           />
         )}
 
