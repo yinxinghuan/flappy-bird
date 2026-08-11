@@ -73,7 +73,7 @@ export function useFlappyBird(): UseFlappyBirdReturn {
   const [phase, setPhase] = useState<'start' | 'playing' | 'dead'>('start');
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(() => {
-    const saved = localStorage.getItem('fb-high-score');
+    const saved = alteruLocalStorage.getItem('fb-high-score');
     return saved ? parseInt(saved, 10) : 0;
   });
   const [birdY, setBirdY] = useState(GAME_HEIGHT / 2 - BIRD_SIZE / 2);
@@ -271,8 +271,8 @@ export function useFlappyBird(): UseFlappyBirdReturn {
 
       const finalScore = g.score;
       setScore(finalScore);
-      if (finalScore > (parseInt(localStorage.getItem('fb-high-score') || '0', 10))) {
-        localStorage.setItem('fb-high-score', String(finalScore));
+      if (finalScore > (parseInt(alteruLocalStorage.getItem('fb-high-score') || '0', 10))) {
+        alteruLocalStorage.setItem('fb-high-score', String(finalScore));
         setHighScore(finalScore);
       }
       setBirdY(g.birdY);

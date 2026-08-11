@@ -63,7 +63,7 @@ const translations = {
 type Locale = keyof typeof translations;
 
 function detectLocale(): Locale {
-  const override = typeof localStorage !== 'undefined' ? localStorage.getItem('fb_locale') : null;
+  const override = typeof localStorage !== 'undefined' ? alteruLocalStorage.getItem('fb_locale') : null;
   if (override === 'en' || override === 'zh') return override;
   const lang = (typeof navigator !== 'undefined' ? navigator.language : 'en').toLowerCase();
   if (lang.startsWith('zh')) return 'zh';
